@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container1 {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .form {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        label {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+            color: #999;
+            transition: 0.2s;
+            pointer-events: none;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .password-strength {
+            height: 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+        }
+
+        #password-strength {
+            width: 0;
+        }
+
+        .password-strength.weak {
+            background-color: #ff5722;
+        }
+
+        .password-strength.medium {
+            background-color: #ffc107;
+        }
+
+        .password-strength.strong {
+            background-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container1">
+        <h1>User Registration</h1>
+        <form action="#" method="post">
+            <div class="form">
+                <input type="text" name="first_name" id="first_name" required>
+                <label for="first_name">First Name</label>
+            </div>
+            <div class="form">
+                <input type="text" name="last_name" id="last_name" required>
+                <label for="last_name">Last Name</label>
+            </div>
+            <div class="form">
+                <input type="email" name="email" id="email" required>
+                <label for="email">Email Address</label>
+            </div>
+            <div class="form">
+                <input type="password" name="password" id="password" required>
+                <label for="password">Password</label>
+                <div class="password-strength" id="password-strength"></div>
+            </div>
+            <div class="form">
+                <input type="password" name="confirm_password" id="confirm_password" required>
+                <label for="confirm_password">Confirm Password</label>
+            </div>
+            <div class="form">
+                <p style="font-weight: bold;">DOB</p>
+                <input type="date" name="dob" id="dob" required>
+                <label for="dob"></label>
+            </div>
+            <div class="form">
+                <select name="gender" id="gender" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <div class="form">
+                <p style="font-weight: bold;">Profile Picture</p>
+                <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required>
+                <label for="profile_picture"></label>
+            </div>
+            <div class="form">
+                <p><label for="terms_conditions">I agree to all the T&C</label>
+                <input type="checkbox" name="terms_conditions" id="terms_conditions" required></p>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <script>
+        document.querySelectorAll('.form input, .form select').forEach(function(input) {
+            input.addEventListener('input', function() {
+                if (this.value !== '') {
+                    this.nextElementSibling.style.opacity = '0';
+                } else {
+                    this.nextElementSibling.style.opacity = '1';
+                }
+            });
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strength = calculatePasswordStrength(password);
+
+            const passwordStrengthElement = document.getElementById('password-strength');
+            passwordStrengthElement.style.width = `${strength * 25}%`;
+            passwordStrengthElement.className = 'password-strength';
+
+            if (strength < 2) {
+                passwordStrengthElement.classList.add('weak');
+            } else if (strength < 3) {
+                passwordStrengthElement.classList.add('medium');
+            } else {
+                passwordStrengthElement.classList.add('strong');
+            }
+        });
+
+        function calculatePasswordStrength(password) {
+            let strength = 0;
+
+            if (password.length >= 8) {
+                strength++;
+            }
+
+            if (password.match(/[a-z]/)) {
+                strength++;
+            }
+
+            if (password.match(/[A-Z]/)) {
+                strength++;
+            }
+
+            if (password.match(/[0-9]/)) {
+                strength++;
+            }
+
+            return strength;
+        }
+    </script>
+</body>
+</html>
