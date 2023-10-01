@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors Game</title>
+    <style>
+        .choice-container {
+            text-align: center;
+        }
+
+        .choice-container img {
+            max-width: 100px;
+            max-height: 100px;
+            margin: 2px;
+            border-radius: 15%;
+        }
+
+        .choice {
+            font-size: 20px;
+            margin: 10px;
+            background-color: aliceblue;
+            border-radius: 15%;
+        }
+
+        .result-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .result {
+            font-size: 24px;
+            font-weight: bold;
+            background-color: white;
+            display: inline-block;
+            padding: 10px;
+            color: rgb(67, 50, 50);
+        }
+
+        .bg{
+            object-fit: none;
+        }
+    
+    </style>
+</head>
+<body class="bg" background="https://cdn1.vectorstock.com/i/1000x1000/11/45/rock-paper-scissors-pattern-background-vector-4521145.jpg">
+    <p style="text-align: center; background-color: white; font-weight: bolder; font-size: xx-large;">Rock, Paper, Scissors</p>
+
+    <div class="choice-container">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRn_7GYawInqVo8LBhawlNhMKPuOdjeVeR94bpwCJ10uBMNUuVI1aD9RBp3NuFEtdPQWTo&usqp=CAU" alt="Rock" style="border: 50%; border-color: blue;">
+        <button class="choice" id="rock">Rock</button>
+    </div>
+
+    <div class="choice-container">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf_R0XUyeeU9jzPtVDoCD2kZpJttrS3tm065-GsikyADR-ObwKgny0IHy0GBgn8Jabzbc&usqp=CAU" alt="Paper">
+        <button class="choice" id="paper">Paper</button>
+    </div>
+
+    <div class="choice-container">
+        <img src="https://s3-ap-northeast-1.amazonaws.com/bhive-jp/media/yabai/article/3440/shutterstock_239520823.jpg" alt="Scissors">
+        <button class="choice" id="scissors">Scissors</button>
+    </div>
+
+    <div class="result-container">
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const choices = ['rock', 'paper', 'scissors'];
+
+            document.querySelectorAll('.choice').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    const playerChoice = this.id;
+                    const computerChoice = choices[Math.floor(Math.random() * 3)];
+                    const result = determineWinner(playerChoice, computerChoice);
+
+                    displayResult(playerChoice, computerChoice, result);
+                });
+            });
+
+            function determineWinner(playerChoice, computerChoice) {
+                if (playerChoice === computerChoice) {
+                    return 'It\'s a tie!';
+                } else if ((playerChoice === 'rock' && computerChoice === 'scissors') ||
+                        (playerChoice === 'paper' && computerChoice === 'rock') ||
+                        (playerChoice === 'scissors' && computerChoice === 'paper')) {
+                    return 'You win!';
+                } else {
+                    return 'You lose!';
+                }
+            }
+
+            function displayResult(playerChoice, computerChoice, result) {
+                const resultElement = document.getElementById('result');
+                resultElement.textContent = `You chose ${playerChoice}. Computer chose ${computerChoice}. ${result}`;
+            }
+        });
+    </script>
+</body>
+</html>
